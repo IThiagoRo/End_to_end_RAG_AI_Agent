@@ -1,5 +1,12 @@
 requests
+awscli
 boto3
 feedparser
+pypdf
+langchain
+langchain-community
+faiss-cpu
+uvicorn
+fastapi
 
 #-e.
