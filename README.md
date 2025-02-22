@@ -1,6 +1,10 @@
 # Search Cancer Investigations Agent RAG AI 
 
 
+## Architecture Diagram:
+![Architecture](https://github.com/user-attachments/assets/03f9e34f-8c4a-405b-ae79-57ad987b50d9)
+
+
 ## Requirements:
 python3, pip3 
 
@@ -34,3 +38,11 @@ python3 setup.py install
 7.Configure your AWS CLI credentials 
 
 (Read: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html)
+
+8.Run the api server
+ 
+```bash
+python3 src/main.py 
+```
+
+## Usage 
