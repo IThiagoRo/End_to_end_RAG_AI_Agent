@@ -44,6 +44,7 @@ def download_arxiv_pdf(arxiv_id):
     url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
     response = requests.get(url, stream=True)
     if response.status_code == 200:
+        os.makedirs('data/', exist_ok=True)  
         file_name = f"data/arxiv_paper_{arxiv_id}.pdf"
         with open(file_name, 'wb') as f:
             for chunk in response.iter_content(chunk_size=8192):
@@ -68,7 +69,7 @@ def upload_to_s3(file_name, bucket_name="datalakecancer", s3_key=None):
     print(f"File uploaded to S3: s3://{bucket_name}/{s3_key}")
 
 def split_text(pages, chunk_size, chunk_overlap):
-    # Split the pages / text into chunks
+    # Split the pages, text into chunks
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     docs = text_splitter.split_documents(pages)
     return docs
@@ -83,7 +84,6 @@ def create_vector_store(file_name, documents, bucket_name="datalakecancer"):
     # Create the FAISS vector store
     vectorstore_faiss = FAISS.from_documents(documents, bedrock_embeddings)
 
-    # Define save paths
     folder_path = "data_vectors"  # Local folder 
     os.makedirs(folder_path, exist_ok=True)
 
@@ -98,14 +98,14 @@ def create_vector_store(file_name, documents, bucket_name="datalakecancer"):
     upload_to_s3(pkl_path, bucket_name, f"data_vectors/{file_name}.pkl")
     print(f"Vector store uploaded to S3 at s3://{bucket_name}/data_vectors/")
 
-if __name__ == '__main__':
-    query = "Cancer"
-    arxiv_ids = search_arxiv(query)
-
-    for arxiv_id in arxiv_ids:
-        file_name = download_arxiv_pdf(arxiv_id)
-        loader = PyPDFLoader(file_name)
-        pages = loader.load_and_split()
-
-        splitted_docs = split_text(pages, 1000, 200)
-        create_vector_store(file_name[5:], splitted_docs)
+#if __name__ == '__main__':
+#    query = "Cancer"
+#    arxiv_ids = search_arxiv(query)
+#
+#    for arxiv_id in arxiv_ids:
+#        file_name = download_arxiv_pdf(arxiv_id)
+#        loader = PyPDFLoader(file_name)
+#        pages = loader.load_and_split()
+#
+#        splitted_docs = split_text(pages, 1000, 200)
+#        create_vector_store(file_name[5:], splitted_docs)
