@@ -1,9 +1,20 @@
 # Search Cancer Investigations Agent RAG AI 
+This project aims to develop an AI-powered RAG agent that helps oncologists and healthcare experts stay up to date with new scientific publications on cancer.
 
+To achieve this, the agent has been built using AWS cloud services and automatically downloads articles published on arXiv related to cancer. It then analyzes these documents to extract relevant information, making it easier to access the latest advancements in cancer research.
+
+## Data:
+The information is obtained from arxiv api 
+(link: https://arxiv.org/)
 
 ## Architecture Diagram:
 ![Architecture](https://github.com/user-attachments/assets/03f9e34f-8c4a-405b-ae79-57ad987b50d9)
 
+## Models Used:
+```bash
+Amazon Titan Embedding G1 - Text
+Meta Llama 3
+```
 
 ## Requirements:
 python3, pip3 
@@ -45,4 +56,49 @@ python3 setup.py install
 python3 src/main.py 
 ```
 
-## Usage 
+## API Reference
+
+The api has two endpoints: 
+
+- Process
+- Query
+
+(API Link: http://ec2-54-197-105-185.compute-1.amazonaws.com:8000/docs)
+
+### 1. Process arXiv Articles
+
+**URL:** `/process/`
+
+**Method:** `GET`
+
+**Parameters:**
+- `query` (str, optional, default "Cancer"): Query to search for articles on arXiv.
+
+**Response:**
+```json
+{
+  "message": "Processing complete",
+  "arxiv_ids": ["2203.00502v1"]
+}
+```
+
+### 2. Query the RAG System
+
+**URL:** `/query/`
+
+**Method:** `POST`
+
+**Request Body:**
+```json
+{
+  "question": "Tell me about breast cancer"
+}
+```
+
+**Response:**
+```json
+{
+  "question": "Tell me about breast cancer",
+  "answer": "Breast cancer is a serious health threat to women worldwide. The breast cancer dataset..."
+}
+```
