@@ -63,7 +63,7 @@ The api has two endpoints:
 - Process
 - Query
 
-(API Link: http://ec2-54-197-105-185.compute-1.amazonaws.com:8000/docs)
+(API Link: ec2-18-207-208-61.compute-1.amazonaws.com:8000/docs)
 
 ### 1. Process arXiv Articles
 
